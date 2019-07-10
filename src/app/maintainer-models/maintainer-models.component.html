@@ -1,0 +1,174 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Mantenedor de Modelos</h3>
+          <h6 class="card-subtitle">This is model maintainer demo</h6>
+          <ngb-tabset type="pills">
+            <ngb-tab title="Crear">
+              <ng-template ngbTabContent>
+                  <h4 style="text-align: center" >Registro de Modelos</h4><hr>
+              <div  style="text-align: center">
+                  <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                   <h6 style="text-align: left ;margin-left: 2% ">Nombre: </h6>
+                    <input   type="text"  name="name" #name="ngModel" [(ngModel)]="model.name"  placeholder="Nombre del modelo" required>
+                    <h6 style="text-align: left ; margin-left: 2%">Frecuencia GSM: </h6>
+                    <input type="text" name="frecuency_gsm" #frecuency_gsm="ngModel" [(ngModel)]="model.frecuency_gsm"  placeholder="Quad-Band 850/900/1800/1900MHZ" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Fuente de alimentación: </h6>
+                    <input   type="text"  name="power_supply" #power_supply="ngModel" [(ngModel)]="model.power_supply"  placeholder="9 ̴24 V DC 2A" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Relay: </h6>
+                    <input   type="text"  name="exit_relay" #exit_relay="ngModel" [(ngModel)]="model.exit_relay"  placeholder="ON/OF" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Peso: </h6>
+                    <input   type="text"  name="weight" #weight="ngModel" [(ngModel)]="model.weight"  placeholder="180g" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Dimensión exterior: </h6>
+                    <input   type="text"  name="outer_dimension" #outer_dimension="ngModel" [(ngModel)]="model.outer_dimension"  placeholder="102x76x27 mm" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Rango de Humnedad: </h6>
+                    <input   type="text"  name="humidity_range" #humidity_range="ngModel" [(ngModel)]="model.humidity_range"  placeholder="Humedad relativa 90%" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Rango de Temperatura: </h6>
+                    <input   type="text"  name="temperature_range" #temperature_range="ngModel" [(ngModel)]="model.temperature_range"  placeholder="-20 ̴ + 60ºC" required>
+
+                    <button   style="margin-left: 1%" class="btn btn-rounded btn-info " (click)="add()">Crear Modelo</button>
+                  </form>
+                  </div> 
+                  
+        </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>
+                <b>Listado de Modelos</b>
+              </ng-template>
+              <ng-template ngbTabContent>
+                      <div class="listado" style="overflow-x:scroll"><br>
+                        <h4 style="text-align: center" >Listado de Modelos</h4><hr>
+                        <table class="table table-responsive{-md:12}" style="width:50%" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+                          <thead>
+                          <tr>
+                              <th style="width: 10% ; text-align: center" hidden>
+                                  <mfDefaultSorter by="age">ID</mfDefaultSorter>
+                              </th>
+                              <th style="width: 20% ; text-align: center">
+                                  <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+                              </th>
+                             
+                              <th style="width: 50% ; text-align: center">
+                                <mfDefaultSorter by="email">Frecuencia GSM</mfDefaultSorter>
+                            </th>
+                            <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Fuente de alimentación</mfDefaultSorter>
+                           </th>
+                             <th style="width: 50% ; text-align: center">
+                            <mfDefaultSorter by="email">Relay</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                                  <mfDefaultSorter by="email">Peso</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Dimensión exterior</mfDefaultSorter>
+                            </th>
+                            <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Rango de Humnedad</mfDefaultSorter>
+                            </th>
+                            
+                            <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Rango de Temperatura</mfDefaultSorter>
+                            </th>
+                            <th style="width: 20%; text-align: center">
+                                      <mfDefaultSorter by="modificar">Modificar</mfDefaultSorter>
+                            </th>
+                              <th style="width: 20%; text-align: center">
+                              <mfDefaultSorter by="modificar">Eliminar</mfDefaultSorter>
+                              </th> 
+                          </tr>
+                          </thead> 
+                          <tbody>
+                          <tr *ngFor="let model of ArrayModels">
+                              <td style="text-align: center" hidden >{{model.id}}</td>
+                              <td style="text-align: center" >{{model.name}}</td>
+                              <td style="text-align: center">{{model.frecuency_gsm}}</td>
+                              <td style="text-align: center">{{model.power_supply}}</td>
+                              <td style="text-align: center">{{model.exit_relay}}</td>
+                              <td style="text-align: center">{{model.weight}}</td>
+                              <td style="text-align: center">{{model.outer_dimension}}</td>
+                              <td style="text-align: center">{{model.humidity_range}}</td>
+                              <td style="text-align: center">{{model.temperature_range}}</td>
+                             
+                              <!--<td class="text-right">{{user.rut}}</td> 
+                               <td>{{user.address | uppercase}}</td> -->
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-success" (click)="detail(model); open2(content)">Modificar</button> </td>
+                            
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-danger">Eliminar</button> </td>
+                             
+                          </tr>
+                        </tbody>
+                          <tfoot>
+                          <tr>
+                              <td colspan="4">
+                                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                              </td>
+                          </tr>
+                          </tfoot>
+                      </table>
+               </div>
+                 </ng-template>
+
+                 <ng-template #content let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Editar Grupo</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div  style="text-align: center">
+                      <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                        <!--idmodel :number;
+                          namemodel:string;
+                          frecuency_gsmmodel:string;
+                          power_supplymodel: string;
+                          exit_relaymodel : string;
+                          weightmodel : string;
+                          outer_dimensionmodel : string;
+                          humidity_rangemodel : string;
+                          temperature_rangemodel : string-->
+                        <h6 style="text-align: left ;margin-left: 2% " hidden> ID: </h6>
+                        <input  sytle="width: 100%;" type="text"  name="id" #id="ngModel" [(ngModel)]="idmodel"  hidden required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Nombre: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="name" #name="ngModel" [(ngModel)]="namemodel"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Frecuencia GSM: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="frecuency_gsm" #frecuency_gsm="ngModel" [(ngModel)]="frecuency_gsmmodel"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Fuente de alimentación: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="power_supply" #power_supply="ngModel" [(ngModel)]="power_supplymodel"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Relay: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="exit_relay" #exit_relay="ngModel" [(ngModel)]="exit_relaymodel"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Peso: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="weight" #weight="ngModel" [(ngModel)]="weightmodel"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Dimensión exterior: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="outer_dimension" #outer_dimension="ngModel" [(ngModel)]="outer_dimensionmodel"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Rango de Humedad: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="humidity_range" #humidity_range="ngModel" [(ngModel)]="humidity_rangemodel"   required>
+                        <h6 style="text-align: left ; margin-left: 2%">Rango de Temperatura: </h6>
+                        <input type="text" name="temperature_range" #temperature_range="ngModel" [(ngModel)]="temperature_rangemodel"  required><br>
+                       
+                        <button   style="margin-left: 1%" class="btn btn-rounded btn-info" (click)=" update()">Modificar Grupo</button>
+                      </form>
+                      </div> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+                  </div>
+          </ng-template>
+
+            </ngb-tab>
+            <ngb-tab title="Disabled" [disabled]="true">
+              <ng-template ngbTabContent>
+                <p class="p-t-20">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
+                  master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
+                  keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
+                  salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+</div>

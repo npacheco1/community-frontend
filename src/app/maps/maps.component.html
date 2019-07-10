@@ -1,0 +1,63 @@
+<div class="outer-wrapper">
+  <div class="map-wrapper" id="wrapper" #wrapper>
+<agm-map [(latitude)]="location.lat" [(longitude)]="location.lng" [(zoom)]="location.zoom" [disableDefaultUI]="true" [zoomControl]="true" [(fitBounds)]='location.viewport'>
+  <agm-marker 
+  *ngFor="let m of markersx " 
+  [latitude]="removeQuote(m.latitude)" 
+  [longitude]="removeQuote(m.longitude)" 
+  [label]="m.name" 
+  [draggable] = "true"
+  [iconUrl]="iconMap(m.status)"></agm-marker>
+  <!--
+  <agm-circle [latitude]="location.lat" [longitude]="location.lng"
+  [(radius)]="circleRadius"
+  [fillColor]="'blue'"
+  [circleDraggable]="true"
+  [editable]="true"></agm-circle>-->
+</agm-map>
+</div>
+</div>
+<!--<label *ngFor="let data  of ArrayDispositives" >latitud : {{data.latitude}} longitud : {{data.longitude}} </label><hr>-->
+<form class="form-inline" #form="ngForm" (ngSubmit)="updateOnMap($event)" ac>
+
+<form class="form-inline" #form="ngForm" (ngSubmit)="updateOnMap($event)" >
+
+<div class="container-fluid">
+  <div class='row'>
+    <div class="form-group">
+      <label class='col-sm-10'>Direccion  1</label><br>
+      <input class='col-sm-10' type='text' name="address_level_1" [(ngModel)]='location.address_level_1' class="form-control" placeholder='Oficina, Dpto, Hogar, Calle'>
+    </div>
+    <div class="form-group">
+      <label class='col-sm-10'>Direccion 2</label>
+      <input class='col-sm-10' name="address_level_2" [(ngModel)]='location.address_level_2' class='form-control' placeholder='Ciudad'/>
+    </div>
+
+    <div class="form-group">
+      <label class='col-sm-12'>Estado / Provincia / Region</label> <br>
+      <input class='col-sm-10'  name="address_state" [(ngModel)]='location.address_state' class='form-control' placeholder='Provincia'>
+    </div>
+
+    <div class="form-group">
+      <label class='col-sm-10'>Pais</label>
+      <input class='col-sm-10' name="address_country" [(ngModel)]='location.address_country' class='form-control' placeholder='Pais'>
+    </div>
+
+    <div class="form-group">
+      <label class='col-sm-10'>Codigo Postal</label>
+      <input class='col-sm-10' name="address_zip"  [(ngModel)]='location.address_zip' class='form-control' placeholder='Codigo Postal'>
+    </div><br>
+   
+    <button (click)='updateOnMap( )' type="submit" class="btn btn-primary">Buscar</button>
+  </div>
+</div>
+</form>
+
+<div class="container-fluid">
+  <div class='row'>
+    <div class="form-group">
+      <label class='col-sm-10'>Radio en Millas</label>
+        <input type='text' class='form-control' #miles  [value]='circleRadiusInMiles() | number:"0.0-2"'  (keyup)="milesToRadius(miles.value)"/>
+    </div>
+  </div>
+</div>

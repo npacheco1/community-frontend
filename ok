@@ -1,0 +1,12 @@
+[1mdiff --git a/src/app/app.module.ts b/src/app/app.module.ts[m
+[1mindex 8f4a1627..a08aa5dc 100644[m
+[1m--- a/src/app/app.module.ts[m
+[1m+++ b/src/app/app.module.ts[m
+[36m@@ -40,6 +40,7 @@[m [mconst DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {[m
+   minScrollbarLength: 20[m
+ };[m
+ [m
+[32m+[m
+ @NgModule({[m
+   declarations: [[m
+     AppComponent,[m

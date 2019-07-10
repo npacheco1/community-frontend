@@ -1,0 +1,38 @@
+<div class="card card-hover">
+    <div class="card-body">
+        <div class="d-md-flex align-items-center">
+            <div>
+                <h4 class="card-title">Alertas emitidas por Las Juntas de Vecinos </h4>
+                <h5 class="card-subtitle">Grafica de Alertas</h5>
+            </div>
+            <!--
+            <div class="ml-auto align-items-center">
+                <div class="dl">
+                    <select class="custom-select">
+                        <option value="0" selected>Mensual</option>
+                        <option value="1">Diario</option>
+                        <option value="2">Semanal</option>
+                        <option value="3">Anual</option>
+                    </select>
+                </div>
+            </div>-->
+        </div>
+        <!-- column -->
+        <div class="row m-t-40">
+            <!-- column -->
+            <div class="col-lg-6">
+                <div id="visitor" class="m-t-20"></div>
+            </div>
+            <!-- column -->
+            <div class="col-lg-6"> 
+                <ul class="list-style-none" *ngFor="let c of charter">
+                    <li class="m-t-20">
+                        <i class="fas fa-circle m-r-5 text-cyan font-12"></i>{{c.name}}
+                        <span class="float-right">{{c.total}}</span>
+                    </li> 
+                </ul>
+            </div>
+        </div>
+        <!-- column -->
+    </div>
+</div>

@@ -1,0 +1,183 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Mantenedor de usuarios</h3>
+            <h6 class="card-subtitle">This is maintainer demo</h6>
+            <ngb-tabset type="pills">
+              <ngb-tab title="Crear">
+                <ng-template ngbTabContent>
+                    <h4 style="text-align: center" >Registro de Usuarios</h4><hr>
+                <div  style="text-align: center">
+                    <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                      <!--name="name" #nombre="ngModel" [(ngModel)]="user.name" 
+                      name="rut" #rut="ngModel" [(ngModel)]="user.rut"
+                      name="email" #email="ngModel" [(ngModel)]="user.email"
+                      name="address" #nombre="ngModel" [(ngModel)]="user.address"
+                      #nombre="ngModel" [(ngModel)]="user.phone" name="usuario" 
+                      name="password" #password="ngModel" [(ngModel)]="user.password"
+                      -->
+                      <h6 style="text-align: left ;margin-left: 26% ">Nombre: </h6>
+                       <input   type="text"    placeholder="Nombre completo"  name="name" #name="ngModel" [(ngModel)]="model.name"required>
+                      <h6 style="text-align: left ; margin-left: 26%">RUT: </h6>
+                       <input type="text"   placeholder="Ejemplo: 17906400-4" name="rut" #rut="ngModel" [(ngModel)]="model.rut"  required>
+                      <h6 style="text-align: left ;margin-left: 26% ">Email:</h6>
+                       <input  type="email" placeholder="example@test.cl"  name="email" #email="ngModel" [(ngModel)]="model.email" required>
+                      <h6 style="text-align: left ;margin-left: 26% ">Direccion: </h6>
+                       <input  type="text" placeholder="Direccion" name="address" #address="ngModel" [(ngModel)]="model.address"  required>
+                      <h6 style="text-align: left ;margin-left: 26%">Telefono: </h6>
+                       <input  type="text" placeholder="+569..."    name="phone" #phone="ngModel" [(ngModel)]="model.phone" required>
+                      <h6 style="text-align: left ;margin-left: 26%">Rol: </h6>
+                      <select  name="role_id" #role_id="ngModel" [(ngModel)]="model.role_id">
+                        <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                         <option   *ngFor="let rol of ArrayRoles" [value]="rol.id" placeholder="Selecionar Rol" >{{rol.name}}</option>
+                      </select>
+                      <h6 style="text-align: left ;margin-left: 26%">Sector: </h6>
+                      <select  name="zone_id" #zone_id="ngModel" [(ngModel)]="model.zone_id">
+                        <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                         <option   *ngFor="let zone of ArrayZones" [value]="zone.id" placeholder="Selecionar Zona" >{{zone.name}}</option>
+                      </select>
+                      <h6 style="text-align: left ;margin-left: 26%">Password: </h6>
+                      <input  type="password" placeholder="••••••••" name="password" #password="ngModel" [(ngModel)]="model.password" ><br>
+                      <button type="submit"  style="margin-left: 1%" class="btn btn-rounded btn-info" (click)="add()">Crear Usuario</button>
+                    </form>
+                    </div> 
+                    
+
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab>
+                <ng-template ngbTabTitle>
+                  <b>Listado Usuarios</b>
+                </ng-template>
+                <ng-template ngbTabContent>
+                        <div class="listado" ><br>
+                          <h4 style="text-align: center" >Listado de Usuarios</h4><hr>
+                          <table class="table table-responsive{-md:12}" style="width:100%" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+                            <thead>
+                            <tr>
+                                <th style="width: 20% ; text-align: center">
+                                    <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+                                </th>
+                                <th style="width: 50% ; text-align: center">
+                                    <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10% ; text-align: center">
+                                    <mfDefaultSorter by="age">RUT</mfDefaultSorter>
+                                </th>
+                                <th style="width: 20% ; text-align: center">
+                                    <mfDefaultSorter by="city">Direccion</mfDefaultSorter>
+                                </th>
+                                <th style="width: 20% ; text-align: center">
+                                  <mfDefaultSorter by="city">Telefono</mfDefaultSorter>
+                              </th>
+                               
+                                <th style="width: 20% ; text-align: center">
+                                  <mfDefaultSorter by="city">ROL</mfDefaultSorter>
+                              </th>
+                              <th style="width: 20% ; text-align: center">
+                                <mfDefaultSorter by="city">Sector</mfDefaultSorter>
+                              </th>
+                              
+                                <th style="width: 20%; text-align: center">
+                                  <mfDefaultSorter by="modificar">Modificar</mfDefaultSorter>
+                                </th>
+                                <th style="width: 20%; text-align: center">
+                                  <mfDefaultSorter by="modificar">Eliminar</mfDefaultSorter>
+                                </th>
+                            </tr>
+                            </thead> 
+                            <tbody>
+                            <tr *ngFor="let user of ArrayUsers">
+                                <td hidden>{{user.id}}</td>
+                                <td style="text-align : center">{{user.name}}</td>
+                                <td style="text-align : center">{{user.email}}</td>
+                                <td style="text-align : center">{{user.rut}}</td> 
+                                <td style="text-align : center">{{user.address }}</td> 
+                                <td style="text-align : center">{{user.phone}}</td> 
+                                <td style="text-align : center" *ngFor="let rol of user.roles" hidden>{{rol.id}}</td>
+                                <td style="text-align : center" *ngFor="let rol of user.roles">{{rol.name | uppercase}}</td>
+                                  <p *ngIf="!user.zones?.length > 0   ">
+                                    <td style="text-align : center" >NO POSEE SECTOR</td>
+                                  </p> 
+                                  <p *ngIf="user.zones?.length > 0">
+                                   <td style="text-align : center" *ngFor="let zone of user.zones" >{{zone.name | uppercase}}</td> 
+                                  </p>
+                               <td> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-success" (click)="detail(user , zone); open2(content)">Modificar</button> </td>
+                               <td> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-danger">Eliminar</button> </td>
+
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                      
+                      </div>
+                </ng-template>
+                <ng-template #content let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Editar Usuario</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div  style="text-align: center">
+                      <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                       
+                        <h6 style="text-align: left ;margin-left: 2% " hidden> ID: </h6>
+                        <input  sytle="width: 100%;" type="text"  name="id" #id="ngModel" [(ngModel)]="iduser"  hidden required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Nombre: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="name" #name="ngModel" [(ngModel)]="nameuser"   required>
+                        <h6 style="text-align: left ; margin-left: 26%">RUT: </h6>
+                        <input type="text"   placeholder="Ejemplo: 17906400-4" name="rut" #rut="ngModel" [(ngModel)]="rutuser"  required>
+                       <h6 style="text-align: left ;margin-left: 26% ">Email:</h6>
+                        <input  type="email" placeholder="example@test.cl"  name="email" #email="ngModel" [(ngModel)]="emailuser" required>
+                       <h6 style="text-align: left ;margin-left: 26% ">Direccion: </h6>
+                        <input  type="text" placeholder="Direccion" name="address" #address="ngModel" [(ngModel)]="addressuser"  required>
+                       <h6 style="text-align: left ;margin-left: 26%">Telefono: </h6>
+                        <input  type="text" placeholder="+569..."    name="phone" #phone="ngModel" [(ngModel)]="phoneuser" required>
+                       <h6 style="text-align: left ;margin-left: 26%">Rol: </h6>
+                      <!-- <div *ngFor="let user of ArrayUsers" > -->
+                        <select  name="role_id" #role_id="ngModel" [(ngModel)]="role_iduser">
+                         <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                       <option   *ngFor="let rol of ArrayRoles" [value]="rol.id" placeholder="Selecionar Rol" >{{rol.name}}</option>
+                       </select>
+                       <h6 style="text-align: left ;margin-left: 26%">Sector: </h6>
+                       <select  name="zone_id" #zone_id="ngModel" [(ngModel)]="zone_iduser">
+                        <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                      <option   *ngFor="let zone of ArrayZones" [value]="zone.id" placeholder="Selecionar Zona" >{{zone.name}}</option>
+                      </select>
+                      <!-- </div> -->
+                       
+
+                       <h6 style="text-align: left ;margin-left: 26%">Password: </h6>
+                       <input  type="text" placeholder="••••••••" name="password" #password="ngModel" [(ngModel)]="passworduser" >
+                        <br>
+                        <button  style="margin-left: 1%" class="btn btn-rounded btn-info" (click)="update()">Modificar Usuario</button>
+                      </form>
+                      </div> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+                  </div>
+          </ng-template>
+              </ngb-tab>
+              <ngb-tab title="Disabled" [disabled]="true">
+                <ng-template ngbTabContent>
+                  <p class="p-t-20">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
+                    master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
+                    keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
+                    salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
+        </div>
+      </div>
+</div>

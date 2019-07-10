@@ -1,0 +1,221 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Mantenedor de Dispositivos</h3>
+          <h6 class="card-subtitle">This is dispositive maintainer demo</h6>
+          <ngb-tabset type="pills">
+            <ngb-tab title="Crear">
+              <ng-template ngbTabContent>
+                  <h4 style="text-align: center" >Registro de Dispositivos</h4><hr>
+              <div  style="text-align: center">
+                  <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                   <h6 style="text-align: left ;margin-left: 2% ">Nombre: </h6>
+                    <input   type="text"  name="name" #name="ngModel" [(ngModel)]="model.name"  placeholder="Nombre del Dispositivo" required>
+                    <h6 style="text-align: left ; margin-left: 2%">Modelo: </h6>
+                    <select  style="width :100%" name="model_id" #model_id="ngModel" [(ngModel)]="model.model_id">
+                      <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                        <option  *ngFor="let model of ArrayModels" [value]="model.id" >{{model.name}}</option>
+                    </select>
+ 
+                    <input type="button" class="btn btn-rounded btn-info " (click)="open_map(ngbTabContent)" value="Mapa" >
+                     
+                    <h6 style="text-align: left ;margin-left: 2% ">Longitud: </h6>
+                    <input  readonly type="text"  name="longitude" #longitude="ngModel" [(ngModel)]="model.longitude"  placeholder="ej: -33.4378" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Latitud: </h6>
+                    <input  readonly type="text"  name="latitude" #latitude="ngModel" [(ngModel)]="model.latitude"  placeholder="ej: -33.4378" required>
+        
+                    <h6 style="text-align: left ;margin-left: 2% ">Estado: </h6>
+                    <select  style="width :100%" name="status_id" #status_id="ngModel" [(ngModel)]="model.status_id">
+                      <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                        <option  *ngFor="let status of ArrayStatus" [value]="status.id" >{{status.name}}</option>
+                    </select>
+                    <h6 style="text-align: left ;margin-left: 2% ">Sector: </h6>
+
+                    <select  style="width :100%" name="zone_id" #zone_id="ngModel" [(ngModel)]="model.zone_id">
+                      <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                        <option  *ngFor="let zone of ArrayZones" [value]="zone.id" >{{zone.name}}</option>
+                    </select>
+
+                    <h6 style="text-align: left ;margin-left: 2% ">Tarjeta Sim: </h6>
+
+                    <select  style="width :100%" name="sim_id" #sim_id="ngModel" [(ngModel)]="model.sim_id">
+                      <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                        <option  *ngFor="let sim of ArraySimcard" [value]="sim.id" >{{sim.sim_number}}</option>
+                    </select>
+
+                    <h6 style="text-align: left ;margin-left: 2% ">Tiempo: </h6>
+                    <input   type="text"  name="time" #longitude="ngModel" [(ngModel)]="model.time"  placeholder="ej: 30" required>
+
+                    <button   style="margin-left: 1%" class="btn btn-rounded btn-info " (click)="add()">Crear Dispositivo</button>
+                  </form>
+                  </div> 
+                  
+        </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>
+                <b>Listado de Dispositivos</b>
+              </ng-template>
+              <ng-template ngbTabContent>
+                      <div class="listado" style="overflow-x:scroll"><br>
+                        <h4 style="text-align: center" >Listado de Dispositivos</h4><hr>
+                        <table class="table table-responsive{-md:12}" style="width:50%" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+                          <thead>
+                          <tr>
+                              <th style="width: 10% ; text-align: center" hidden>
+                                  <mfDefaultSorter by="age">ID</mfDefaultSorter>
+                              </th>
+                              <th style="width: 20% ; text-align: center">
+                                  <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+                              </th>
+                             
+                              <th style="width: 50% ; text-align: center">
+                                <mfDefaultSorter by="email">Modelo</mfDefaultSorter>
+                            </th>
+                            <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Longitud</mfDefaultSorter>
+                           </th>
+                             <th style="width: 50% ; text-align: center">
+                            <mfDefaultSorter by="email">Latitud</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                                  <mfDefaultSorter by="email">Estado</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                                <mfDefaultSorter by="email">Sector</mfDefaultSorter>
+                            </th>
+                            <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Numero asociado</mfDefaultSorter>
+                          </th>
+                             
+                            <th style="width: 20%; text-align: center">
+                                      <mfDefaultSorter by="modificar">Modificar</mfDefaultSorter>
+                            </th>
+                              <th style="width: 20%; text-align: center">
+                              <mfDefaultSorter by="modificar">Eliminar</mfDefaultSorter>
+                              </th> 
+                          </tr>
+                          </thead> 
+                          <tbody>
+                          <tr *ngFor="let dispositive of ArrayDispositives">
+                              <td style="text-align: center" hidden >{{dispositive.id}}</td>
+                              <td style="text-align: center" >{{dispositive.name}}</td>
+                              <td style="text-align: center">{{dispositive.models.name}}</td>
+                              <td style="text-align: center">{{dispositive.latitude}}</td>
+                              <td style="text-align: center">{{dispositive.longitude}}</td>
+                              <td style="text-align: center">{{dispositive.status.name}}</td>
+                              <td style="text-align: center" >{{dispositive.zones[0].name}}</td>
+                              <td style="text-align: center" *ngFor="let sim of dispositive.sims">{{sim.sim_number}}</td>
+                             
+                              <!--<td class="text-right">{{user.rut}}</td> 
+                               <td>{{user.address | uppercase}}</td> -->
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-success" (click)="detail(dispositive); open2(content) ; detail(zone)">Modificar</button> </td>
+                            
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-danger">Eliminar</button> </td>
+                             
+                          </tr>
+                        </tbody>
+                          <tfoot>
+                          <tr>
+                              <td colspan="4">
+                                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                              </td>
+                          </tr>
+                          </tfoot>
+                      </table>
+               </div>
+                 </ng-template>
+
+                 <ng-template #content let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Editar Dispositivo</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div  style="text-align: center">
+                      <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                       
+                        <h6 style="text-align: left ;margin-left: 2% " hidden> ID: </h6>
+                        <input  sytle="width: 100%;" type="text"  name="id" #id="ngModel" [(ngModel)]="idDis"  hidden required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Nombre: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="name" #name="ngModel" [(ngModel)]="nameDis"   required>
+                        <h6 style="text-align: left ; margin-left: 2%">Modelo: </h6>
+                      <!--   <input type="text" name="model_id" #model_id="ngModel" [(ngModel)]="model_idDis"  required><br>-->
+                        
+                        <select style="width :100%" name="model_id" #model_id="ngModel" [(ngModel)]="model_idDis">
+                          <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                           <option   *ngFor="let model of ArrayModels" [value]="model.id" placeholder="Selecionar Modelo" >{{model.name}}</option>
+                          
+                         </select> <br>
+                         <input type="button" class="btn btn-rounded btn-info " (click)="open_map(ngbTabContent)" value="Mapa" >
+                         <h6 style="text-align: left ;margin-left: 2% ">Longitud: </h6> 
+                         <input  sytle="width: 100%;" type="text"  name="longitude" #longitude="ngModel" [(ngModel)]="longitudeDis"   required>
+
+                         <h6 style="text-align: left ;margin-left: 2% ">Latitud: </h6> 
+                         <input  sytle="width: 100%;" type="text"  name="latitude" #latitutde="ngModel" [(ngModel)]="latitudeDis"   required>
+                         <h6 style="text-align: left ;margin-left: 2% ">Estado: </h6>
+                    <select  style="width :100%" name="status_id" #status_id="ngModel" [(ngModel)]="status_idDis">
+                      <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                        <option  *ngFor="let status of ArrayStatus" [value]="status.id" >{{status.name}}</option>
+                    </select>
+                    <h6 style="text-align: left ;margin-left: 2% ">Sector: </h6>
+
+                    <select  style="width :100%" name="zone_id" #zone_id="ngModel" [(ngModel)]="zone_idDis">
+                      <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                        <option  *ngFor="let zone of ArrayZones" [value]="zone.id" >{{zone.name}}</option>
+                    </select>
+                    <h6 style="text-align: left ;margin-left: 2% ">tarjeta Sim: </h6>
+                    <select  style="width :100%" name="sim_id" #sim_id="ngModel" [(ngModel)]="sim_idDis">
+                      <!-- <option selected style="background: rgb(147, 147, 147)" value="">Seleccione Grupo ...</option> -->
+                        <option  *ngFor="let sim of ArraySimcard" [value]="sim.id" >{{sim.sim_number}}</option>
+                    </select>
+                    <h6 style="text-align: left ;margin-left: 2% ">Tiempo: </h6> 
+                    <input  sytle="width: 100%;" type="text"  name="time" #name="ngModel" [(ngModel)]="timeDis"   required>
+
+                        <button   style="margin-left: 1%" class="btn btn-rounded btn-info" (click)=" update()">Modificar Grupo</button>
+                      </form>
+                      </div> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+                  </div>
+          </ng-template>
+ 
+            </ngb-tab>
+
+
+            <ngb-tab >
+              <ng-template #ngbTabContent let-c="close" >
+                  <!-- mapa--> 
+                  <div class="modal-header">
+                    <h4 class="modal-title">Buscar coordenadas</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <input id="address" type="textbox" name="address" [(ngModel)]="address">
+                    <input id="submit" type="button" value="Buscar" (click)="findLocation()">
+                    <agm-map [(latitude)]="location.lat" [(longitude)]="location.lng" [(zoom)]="location.zoom" [disableDefaultUI]="true" [zoomControl]="true" [(fitBounds)]='location.viewport'>
+                      <agm-marker *ngFor="let dispositive of ArrayDispositives" [label]="labelOptions" [(latitude)]="location.marker.lat" [(longitude)]="location.marker.lng" [markerDraggable]="location.marker.draggable" (dragEnd)='markerDragEnd($event)'></agm-marker>
+                    
+                      <agm-circle [latitude]="location.lat" [longitude]="location.lng"
+                      [(radius)]="circleRadius"
+                      [fillColor]="'blue'"
+                      [circleDraggable]="true"
+                      [editable]="true"></agm-circle>
+                    </agm-map>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+                  </div> 
+                </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+</div>

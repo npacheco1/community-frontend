@@ -1,0 +1,37 @@
+<h1>Ubicacion de Alarmas Dentro del globo terraqueo</h1>
+<p><a href="https://angular-maps.com/" target="_blank">Official Website</a></p>
+
+<agm-map 
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="false"
+  (mapClick)="mapClicked($event)">
+
+  <agm-marker  
+      *ngFor="let m of markersx; let i = index"
+      (markerClick)="clickedMarker(m.label, i)"
+      [latitude]="removeQuote(m.latitude)"
+      [longitude]="removeQuote(m.longitude)"
+      [label]="m.label"
+      
+
+      [iconUrl]="iconMap(m.status)"
+      [markerDraggable]="m.draggable"
+      (dragEnd)="markerDragEnd(m, $event)">
+      
+    <agm-info-window>
+      <strong>Alarma Ubicada</strong>
+    </agm-info-window>
+    
+  </agm-marker>
+  
+  <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
+      [radius]="5000"
+      [fillColor]="'red'"
+      [circleDraggable]="true"
+      [editable]="true">
+  </agm-circle>
+
+</agm-map>

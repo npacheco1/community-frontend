@@ -1,0 +1,139 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Mantenedor de Contactos</h3>
+          <h6 class="card-subtitle">This is contact maintainer demo</h6>
+          <ngb-tabset type="pills">
+            <ngb-tab title="Crear">
+              <ng-template ngbTabContent>
+                  <h4 style="text-align: center" >Registro de Contactos</h4><hr>
+              <div  style="text-align: center">
+                  <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                   <h6 style="text-align: left ;margin-left: 2% ">Nombre: </h6>
+                    <input   type="text"  name="name" #name="ngModel" [(ngModel)]="model.name"  placeholder="Nombre del Contacto" required>
+                    <h6 style="text-align: left ; margin-left: 2%">Descripcion: </h6>
+                    <input type="text" name="description" #description="ngModel" [(ngModel)]="model.description"  placeholder="Entre calle x de la comuna x" required><br>
+                    <h6 style="text-align: left ;margin-left: 2% ">Telefono: </h6>
+                    <input   type="text"  name="phone" #phone="ngModel" [(ngModel)]="model.phone"  placeholder="ej. 965683978" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Direccion: </h6>
+                    <input   type="text"  name="address" #address="ngModel" [(ngModel)]="model.address"  placeholder="ej. Calle  , comuna , ciudad" required>
+                    <h6 style="text-align: left ;margin-left: 2% ">Email: </h6>
+                    <input   type="text"  name="email" #email="ngModel" [(ngModel)]="model.email"  placeholder="ej. ejemplo@ejemplo.cl" required>
+                    <button   style="margin-left: 1%" class="btn btn-rounded btn-info " (click)="add()">Crear Contacto</button>
+                  </form>
+                  </div> 
+                  
+        </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>
+                <b>Listado de Contactos</b>
+              </ng-template>
+              <ng-template ngbTabContent>
+                      <div class="listado" ><br>
+                        <h4 style="text-align: center" >Listado de Contactos</h4><hr>
+                        <table class="table table-responsive{-md:12}" style="width:100%" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+                          <thead>
+                          <tr>
+                              <th style="width: 10% ; text-align: center" hidden>
+                                  <mfDefaultSorter by="age">ID</mfDefaultSorter>
+                              </th>
+                              <th style="width: 20% ; text-align: center">
+                                  <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                                  <mfDefaultSorter by="email">Descripcion</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                                <mfDefaultSorter by="email">Telefono</mfDefaultSorter>
+                            </th>
+                            <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Direccion</mfDefaultSorter>
+                          </th>
+                          <th style="width: 50% ; text-align: center">
+                            <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                        </th>
+                       
+                             
+                              <th style="width: 20%; text-align: center">
+                                <mfDefaultSorter by="modificar">Modificar</mfDefaultSorter>
+                              </th>
+                              <th style="width: 20%; text-align: center">
+                                <mfDefaultSorter by="modificar">Eliminar</mfDefaultSorter>
+                              </th> 
+                          </tr>
+                          </thead> 
+                          <tbody>
+                          <tr *ngFor="let contact of ArrayContacts">
+                              <td style="text-align: center" hidden >{{contact.id}}</td>
+                              <td style="text-align: center" >{{contact.name}}</td>
+                              <td style="text-align: center">{{contact.description}}</td>
+                              <td style="text-align: center">{{contact.phone}}</td>
+                              <td style="text-align: center">{{contact.address}}</td>
+                              <td style="text-align: center">{{contact.email}}</td>
+                              <!--<td class="text-right">{{user.rut}}</td> 
+                               <td>{{user.address | uppercase}}</td> -->
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-success" (click)="detail(contact); open2(content)">Modificar</button> </td>
+                            
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-danger">Eliminar</button> </td>
+                             
+                          </tr>
+                        </tbody>
+                          <tfoot>
+                          <tr>
+                              <td colspan="4">
+                                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                              </td>
+                          </tr>
+                          </tfoot>
+                      </table>
+               </div>
+                 </ng-template>
+
+                 <ng-template #content let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Editar Contacto</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div  style="text-align: center">
+                      <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                       
+                        <h6 style="text-align: left ;margin-left: 2% " hidden> ID: </h6>
+                        <input  sytle="width: 100%;" type="text"  name="id" #id="ngModel" [(ngModel)]="idcontact"  hidden required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Nombre: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="name" #name="ngModel" [(ngModel)]="namecontact"   required>
+                        <h6 style="text-align: left ; margin-left: 2%">Descripcion: </h6>
+                        <input type="text" name="description" #description="ngModel" [(ngModel)]="descriptioncontact"  required><br>
+                        <h6 style="text-align: left ;margin-left: 2% ">Telefono: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="phone" #phone="ngModel" [(ngModel)]="phonecontact"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Direccion: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="address" #address="ngModel" [(ngModel)]="addresscontact"   required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Telefono: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="email" #email="ngModel" [(ngModel)]="emailcontact"   required>
+                        <button   style="margin-left: 1%" class="btn btn-rounded btn-info" (click)=" update()">Modificar Contacto</button>
+                      </form>
+                      </div> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+                  </div>
+          </ng-template>
+
+            </ngb-tab>
+            <ngb-tab title="Disabled" [disabled]="true">
+              <ng-template ngbTabContent>
+                <p class="p-t-20">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
+                  master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
+                  keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
+                  salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+</div>

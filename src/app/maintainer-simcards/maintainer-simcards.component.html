@@ -1,0 +1,152 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Mantenedor de Tarjetas Sim</h3>
+          <h6 class="card-subtitle">This is simcard maintainer demo</h6>
+          <ngb-tabset type="pills">
+            <ngb-tab title="Crear">
+              <ng-template ngbTabContent>
+                  <h4 style="text-align: center" >Registro de tarjeta SIM</h4><hr>
+              <div  style="text-align: center">
+                  <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                   <h6 style="text-align: left ;margin-left: 2% ">Compañia: </h6>
+                    <input   type="text"  name="name" #name="ngModel" [(ngModel)]="model.sim_company"  placeholder="Nombre de la compañia" required>
+                    <h6 style="text-align: left ; margin-left: 2%">Numero: </h6>
+                    <input type="text" name="sim_number" #sim_number="ngModel" [(ngModel)]="model.sim_number"  placeholder="+569..." required><br>
+                    <h6 style="text-align: left ; margin-left: 2%">Fecha de compra: </h6>
+                    <!--<input type="text" name="purchase_date" #purchase_date="ngModel" [(ngModel)]="model.purchase_date"  placeholder="Entre calle x de la comuna x" required><br> --> 
+                   <input type="text" style="width : 95.7%"  placeholder="yyyy-mm-dd" name="purchase_date" #purchase_date="ngModel" [(ngModel)]="model.purchase_date" ngbDatepicker #d="ngbDatepicker"> 
+                      <button class="btn btn-primary btn-circle" (click)="d.toggle()" type="button"> <i class="fa fa-list"></i></button><br>
+                    <!--<input type="text" name="install_date" #install_date="ngModel" [(ngModel)]="model.install_date"  placeholder="Entre calle x de la comuna x" required><br> -->
+                    <h6 style="text-align: left ; margin-left: 2%">Fecha de Instalacion: </h6>
+                    <input type="text" style="width : 95.7%"  placeholder="yyyy-mm-dd" name="install_date" #install_date="ngModel" [(ngModel)]="model.install_date" ngbDatepicker #c="ngbDatepicker">
+                      <button class="btn btn-primary btn-circle" (click)="c.toggle()" type="button"> <i class="fa fa-list"></i></button><br>
+                       
+                      
+                    
+                    
+                    
+                    <button   style="margin-left: 1%" class="btn btn-rounded btn-info " (click)="add()">Crear Tarjeta SIM</button>
+                  </form>
+                 
+                  </div> 
+                  
+        </ng-template>
+        <form class="form-inline">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd"
+                     name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>
+                <b>Listado de Sims</b>
+              </ng-template>
+              <ng-template ngbTabContent>
+                      <div class="listado" ><br>
+                        <h4 style="text-align: center" >Listado de tarjetas SIM</h4><hr>
+                        <table class="table table-responsive{-md:12}" style="width:100%" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+                          <thead>
+                          <tr>
+                              <th style="width: 10% ; text-align: center" hidden>
+                                  <mfDefaultSorter by="age">ID</mfDefaultSorter>
+                              </th>
+                              <th style="width: 20% ; text-align: center">
+                                  <mfDefaultSorter by="name">Compañia</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                                  <mfDefaultSorter by="email">Numero</mfDefaultSorter>
+                              </th>
+                              <th style="width: 50% ; text-align: center">
+                                <mfDefaultSorter by="email">Fecha de compra</mfDefaultSorter>
+                            </th>
+                            <th style="width: 50% ; text-align: center">
+                              <mfDefaultSorter by="email">Fecha de Instalacion</mfDefaultSorter>
+                          </th>
+                             
+                              <th style="width: 20%; text-align: center">
+                                <mfDefaultSorter by="modificar">Modificar</mfDefaultSorter>
+                              </th>
+                              <th style="width: 20%; text-align: center">
+                                <mfDefaultSorter by="modificar">Eliminar</mfDefaultSorter>
+                              </th> 
+                          </tr>
+                          </thead> 
+                          <tbody>
+                          <tr *ngFor="let sim of ArraySimcards">
+                              <td style="text-align: center" hidden >{{sim.id}}</td>
+                              <td style="text-align: center" >{{sim.sim_company}}</td>
+                              <td style="text-align: center">{{sim.sim_number}}</td>
+                              <td style="text-align: center">{{sim.purchase_date}}</td>
+                              <td style="text-align: center">{{sim.install_date}}</td>
+                              <!--<td class="text-right">{{user.rut}}</td> 
+                               <td>{{user.address | uppercase}}</td> -->
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-success" (click)="detail(sim); open2(content)">Modificar</button> </td>
+                            
+                             <td style="text-align: center"> <button type="submit"  style="margin-left: 0px" class="btn btn-rounded  btn-danger">Eliminar</button> </td>
+                             
+                          </tr>
+                        </tbody>
+                          <tfoot>
+                          <tr>
+                              <td colspan="4">
+                                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                              </td>
+                          </tr>
+                          </tfoot>
+                      </table>
+               </div>
+                 </ng-template>
+
+                 <ng-template #content let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Editar Tarjeta SIM</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div  style="text-align: center">
+                      <form #formUser="ngForm" (ngSubmit)="onSubmit(); formUser.reset();" action="">
+                       
+                        <h6 style="text-align: left ;margin-left: 2% " hidden> ID: </h6>
+                        <input  sytle="width: 100%;" type="text"  name="id" #id="ngModel" [(ngModel)]="idsim"  hidden required>
+                        <h6 style="text-align: left ;margin-left: 2% ">Compañia: </h6> 
+                        <input  sytle="width: 100%;" type="text"  name="sim_company" #sim_company="ngModel" [(ngModel)]="sim_companysim"   required>
+                        <h6 style="text-align: left ; margin-left: 2%">Numerp: </h6>
+                        <input type="text" name="sim_number" #sim_number="ngModel" [(ngModel)]="sim_numbersim"  required><br>
+                        <h6 style="text-align: left ; margin-left: 2%">Fecha de adquisicion: </h6>
+                        <input type="text" name="purchase_date" #purchase_date="ngModel" [(ngModel)]="purchase_datesim"  required><br>
+                        <h6 style="text-align: left ; margin-left: 2%">Fecha de instalacion: </h6>
+                        <input type="text" name="install_date" #install_date="ngModel" [(ngModel)]="install_datesim"  required><br>
+                        <button   style="margin-left: 1%" class="btn btn-rounded btn-info" (click)="update()">Modificar tarjeta SIM</button>
+                      </form>
+                      </div> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+                  </div>
+          </ng-template>
+
+            </ngb-tab>
+            <ngb-tab title="Disabled" [disabled]="true">
+              <ng-template ngbTabContent>
+                <p class="p-t-20">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
+                  master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
+                  keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
+                  salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+</div>
